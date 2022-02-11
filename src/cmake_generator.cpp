@@ -162,6 +162,10 @@ struct Command {
     }
 
     static std::string quote(const std::string &str) {
+        // Quote an empty string
+        if (str.empty()) {
+            return "\"\"";
+        }
         // Don't quote arguments that don't need quoting
         if (str.find(' ') == std::string::npos && str.find('\"') == std::string::npos && str.find('/') == std::string::npos &&
             str.find(';') == std::string::npos) {
@@ -273,9 +277,6 @@ struct Command {
         std::stringstream tmp;
         tmp << value;
         auto str = tmp.str();
-        if (str.empty()) {
-            return true;
-        }
 
         if (had_newline) {
             first_arg = false;
